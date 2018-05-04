@@ -9,6 +9,7 @@ var app = {
 	subtitle: 'This is a todo app',
 	options: ['One', 'Two']
 };
+
 var template = React.createElement(
 	'div',
 	null,
