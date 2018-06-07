@@ -1,79 +1,43 @@
 'use strict';
 
-console.log('app.js is running');
-
-// JSX - Javascript XML
-
-var app = {
-	title: 'React Todo App',
-	subtitle: 'This is a todo app',
-	options: ['One', 'Two']
+//arguements object no longer bound with arrow functions
+var add = function add(a, b) {
+	//console.log(arguements);
+	return a + b;
 };
 
-var template = React.createElement(
-	'div',
-	null,
-	React.createElement(
-		'h1',
-		null,
-		app.title
-	),
-	app.subtitle && React.createElement(
-		'p',
-		null,
-		app.subtitle
-	),
-	app.options.length > 0 ? "heres your options" : "no options",
-	React.createElement(
-		'ol',
-		null,
-		React.createElement(
-			'li',
-			null,
-			'list one'
-		),
-		React.createElement(
-			'li',
-			null,
-			'list two'
-		)
-	)
-);
+console.log(add(55, 1));
+
+//this keyword no longer bound 
 
 var user = {
 	name: 'Alex',
-	age: 26,
-	location: 'Nepean'
+	cities: ['Ottawa', 'Toronto', 'Montreal'],
+	printPlacesLived: function printPlacesLived() {
+		var _this = this;
+
+		return this.cities.map(function (city) {
+			return _this.name + ' has lived in ' + city;
+		});
+	}
 };
 
-function getLocation(location) {
-	if (location) {
-		return React.createElement(
-			'p',
-			null,
-			'Location: ',
-			location
-		);
+console.log(user.printPlacesLived());
+
+//challenge
+var multiplier = {
+	//numbers - array
+	numbers: [1, 2, 3, 4],
+	//multiplyBy - integer
+	multiplyBy: 2,
+	//multiply - return new array where the numbers have been multiplied
+	multiply: function multiply() {
+		var _this2 = this;
+
+		return this.numbers.map(function (number) {
+			return number * _this2.multiplyBy;
+		});
 	}
-}
+};
 
-var templateTwo = React.createElement(
-	'div',
-	null,
-	React.createElement(
-		'h1',
-		null,
-		user.name ? user.name : 'Anonymous'
-	),
-	user.age && user.age >= 18 && React.createElement(
-		'p',
-		null,
-		'Age: ',
-		user.age
-	),
-	getLocation(user.location)
-);
-
-var appRoot = document.getElementById('app');
-
-ReactDOM.render(template, appRoot);
+console.log(multiplier.multiply());
