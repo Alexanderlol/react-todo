@@ -31,3 +31,4 @@ const multiplier = {
 };
 
 console.log(multiplier.multiply());
+
