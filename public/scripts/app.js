@@ -7,83 +7,83 @@ console.log('app.js is running');
 var app = {
 	title: 'React Todo App',
 	subtitle: 'This is a todo app',
-	options: ['One', 'Two']
+	options: []
 };
 
-var template = React.createElement(
-	'div',
-	null,
-	React.createElement(
-		'h1',
-		null,
-		app.title
-	),
-	app.subtitle && React.createElement(
-		'p',
-		null,
-		app.subtitle
-	),
-	app.options.length > 0 ? "heres your options" : "no options",
-	React.createElement(
-		'ol',
-		null,
-		React.createElement(
-			'li',
-			null,
-			'list one'
-		),
-		React.createElement(
-			'li',
-			null,
-			'list two'
-		)
-	)
-);
+var onFormSubmit = function onFormSubmit(e) {
+	e.preventDefault();
 
-var count = 0;
-var addOne = function addOne() {
-	count++;
-	renderCounterApp();
+	var option = e.target.elements.option.value;
+
+	if (option) {
+		app.options.push(option);
+		e.target.elements.option.value = '';
+		renderFormSubmit();
+	}
 };
-var minusOne = function minusOne() {
-	count--;
-	renderCounterApp();
-};
-var reset = function reset() {
-	count = 0;
-	renderCounterApp();
+
+var onRemoveAll = function onRemoveAll(e) {
+	app.options = [];
+	renderFormSubmit();
 };
 
 var appRoot = document.getElementById('app');
 
-var renderCounterApp = function renderCounterApp() {
-	var templateTwo = React.createElement(
+var renderFormSubmit = function renderFormSubmit() {
+	var template = React.createElement(
 		'div',
 		null,
 		React.createElement(
 			'h1',
 			null,
-			'Count: ',
-			count
+			app.title
+		),
+		app.subtitle && React.createElement(
+			'p',
+			null,
+			app.subtitle
 		),
 		React.createElement(
-			'button',
-			{ onClick: addOne },
-			'+1'
+			'p',
+			null,
+			app.options.length > 0 ? "heres your options" : "no options"
 		),
 		React.createElement(
-			'button',
-			{ onClick: minusOne },
-			'-1'
+			'p',
+			null,
+			app.options.length
 		),
 		React.createElement(
-			'button',
-			{ onClick: reset },
-			'reset'
+			'ol',
+			null,
+			React.createElement(
+				'button',
+				{ onClick: onRemoveAll },
+				'Remove All'
+			),
+			React.createElement(
+				'li',
+				null,
+				'list one'
+			),
+			React.createElement(
+				'li',
+				null,
+				'list two'
+			)
+		),
+		React.createElement(
+			'form',
+			{ onSubmit: onFormSubmit },
+			React.createElement('input', { type: 'text', name: 'option' }),
+			React.createElement(
+				'button',
+				null,
+				'Add Option'
+			)
 		)
 	);
-
-	ReactDOM.render(templateTwo, appRoot);
+	ReactDOM.render(template, appRoot);
 };
 
-renderCounterApp();
+renderFormSubmit();

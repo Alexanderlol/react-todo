@@ -5,53 +5,55 @@ console.log('app.js is running');
 const app = {
 	title: 'React Todo App',
 	subtitle: 'This is a todo app',
-	options: ['One', 'Two']
+	options: []
 };
 
-const template = (
-	<div>
-		<h1>{app.title}</h1>
-		{app.subtitle && <p>{app.subtitle}</p>}
-		{/* {(app.options && app.options.length > 0) && <p>here are are your options {app.options}</p>} */}
-		{app.options.length > 0 ? "heres your options" : "no options"}
-		<ol>
-			<li>list one</li>
-			<li>list two</li>
-		</ol>
-	</div>
-);
+const onFormSubmit = (e) => {
+	e.preventDefault();
 
-let count = 0;
-const addOne = () => {
-	count++;
-	renderCounterApp();
-}
-const minusOne = () => {
-	count--;
-	renderCounterApp();
-}
-const reset = () => {
-	count = 0;
-	renderCounterApp();
-}
+	const option = e.target.elements.option.value;
+
+	if (option) {
+		app.options.push(option);
+		e.target.elements.option.value = '';
+		renderFormSubmit();
+	}
+
+};
+
+const onRemoveAll = (e) => {
+	app.options = [];
+	renderFormSubmit();
+};
+
+
 
 const appRoot = document.getElementById('app');
 
-const renderCounterApp = () => {
-	const templateTwo = (
+const renderFormSubmit = () => {
+	const template = (
 		<div>
-			<h1>Count: {count}</h1>
-			<button onClick={addOne}>+1</button>
-			<button onClick={minusOne}>-1</button>
-			<button onClick={reset}>reset</button>
+			<h1>{app.title}</h1>
+			{app.subtitle && <p>{app.subtitle}</p>}
+			{/* {(app.options && app.options.length > 0) && <p>here are are your options {app.options}</p>} */}
+			<p>{app.options.length > 0 ? "heres your options" : "no options"}</p>
+			<p>{app.options.length}</p>
+			<ol>
+				<button onClick={onRemoveAll}>Remove All</button>
+				<li>list one</li>
+				<li>list two</li>
+			</ol>
+
+			<form onSubmit={onFormSubmit}>
+				<input type="text" name="option"/>
+				<button>Add Option</button>
+			</form>
 		</div>
 	);
-
-	ReactDOM.render(templateTwo, appRoot);
+	ReactDOM.render(template, appRoot);
 };
 
-renderCounterApp();
-
+renderFormSubmit();
 
 
 
