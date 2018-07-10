@@ -1,9 +1,25 @@
+class ReactToDoApp extends React.Component {
+	render() {
+		const title = 'React ToDo';
+		const subtitle = 'Put your life in the hands of a computer';
+		const options = ['Thing one', 'Thing two', 'Thing four'];
+		return (
+			<div>
+				<Header title = {title} subtitle = {subtitle} />
+				<Action />
+				<Options options = {options}/>
+				<AddOptions />
+			</div>
+		);
+	}
+}
+
 class Header extends React.Component {
 	render() {
 		return (
 			<div>
-				<h1>React ToDo</h1>
-				<h2>what to do</h2>
+				<h1>{this.props.title}</h1>
+				<h2>{this.props.subtitle}</h2>
 			</div>
 		);
 	}
@@ -23,7 +39,20 @@ class Options extends React.Component {
 	render() {
 		return (
 			<div>
-				<h1>Option1</h1>
+				{
+					this.props.options.map((option) => <Option key={option} optionText={option}/>)
+				}
+				<Option />
+			</div>
+		);
+	}
+}
+
+class Option extends React.Component {
+	render() {
+		return (
+			<div>
+				{this.props.optionText}
 			</div>
 		);
 	}
@@ -33,20 +62,11 @@ class AddOptions extends React.Component {
 	render() {
 		return (
 			<div>
-				<form>Stuff here</form>
+				AddOptions Component here
 			</div>
 		);
 	}
 }
 
-const jsx = (
-	<div>
-		<h1>Title</h1>
-		<Header />
-		<Action />
-		<Options />
-		<AddOptions />
-	</div>
-);
 
-ReactDOM.render(jsx, document.getElementById('app'));
+ReactDOM.render(<ReactToDoApp />, document.getElementById('app'));
